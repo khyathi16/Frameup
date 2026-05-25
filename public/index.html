@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<script>
+
+    const username =
+    localStorage.getItem('username');
+
+    if(!username) {
+
+        window.location.href =
+        'login.html';
+    }
+
+</script>
+<head>
+
+    <title>FameUp</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            FameUp
+        </div>
+
+        <div class="nav-icons">
+
+    <i class="fa-solid fa-house"></i>
+
+    <i class="fa-regular fa-heart"></i>
+
+    <i
+    class="fa-regular fa-user"
+    onclick="window.location.href='profile.html'"
+></i>
+
+    <button onclick="logout()" class="logout-btn">
+        Logout
+    </button>
+
+</div>
+
+    </nav>
+
+
+    <!-- STORIES -->
+
+    <div class="stories">
+
+        <div class="story">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg">
+            <p>Ava</p>
+        </div>
+
+        <div class="story">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg">
+            <p>Leo</p>
+        </div>
+
+        <div class="story">
+            <img src="https://randomuser.me/api/portraits/women/65.jpg">
+            <p>Sophia</p>
+        </div>
+
+        <div class="story">
+            <img src="https://randomuser.me/api/portraits/men/75.jpg">
+            <p>Noah</p>
+        </div>
+
+    </div>
+
+
+    <!-- CREATE POST -->
+
+    <div class="create-post">
+
+        <input
+    type="text"
+    id="imageInput"
+    placeholder="enter photo URL"
+>
+        <textarea
+            id="postInput"
+            placeholder="What's happening?"
+        ></textarea>
+
+        <button onclick="createPost()">
+            Post
+        </button>
+
+    </div>
+
+
+    <!-- POSTS -->
+
+    <div id="postsContainer">
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Profile</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="profile-container">
+
+        <img
+    id="profilePic"
+    class="profile-pic"
+>
+
+        <h1 id="profileUsername"></h1>
+
+        <p id="bio"></p>
+
+        <input
+    type="text"
+    id="profilePicInput"
+    placeholder="Paste profile photo URL..."
+>
+
+<button onclick="updateProfilePic()">
+    Update Photo
+</button>
+
+        <div class="stats">
+
+            <div>
+                <h2 id="postsCount">0</h2>
+                <p>Posts</p>
+            </div>
+
+            <div>
+                <h2 id="followersCount">0</h2>
+                <p>Followers</p>
+            </div>
+
+            <div>
+                <h2 id="followingCount">0</h2>
+                <p>Following</p>
+            </div>
+
+        </div>
+
+        <button onclick="followUser()" id="followBtn">
+            Follow
+        </button>
+
+    </div>
+
+    <script>
+        async function updateProfilePic() {
+
+    const profilePic =
+    document.getElementById(
+        'profilePicInput'
+    ).value;
+
+    const username =
+    localStorage.getItem('username');
+
+    await fetch('/update-profile-pic', {
+
+        method: 'POST',
+
+        headers: {
+
+            'Content-Type':
+            'application/json'
+        },
+
+        body: JSON.stringify({
+
+            username,
+
+            profilePic
+        })
+    });
+
+    localStorage.setItem(
+    'profilePic',
+    profilePic
+);
+
+    alert('Profile Photo Updated');
+
+    loadProfile();
+}
+
+        async function loadProfile() {
+
+            const username =
+            localStorage.getItem('username');
+
+            document.getElementById(
+                'profileUsername'
+            ).innerText = username;
+
+            const response =
+            await fetch(`/profile/${username}`);
+
+            const data =
+            await response.json();
+
+            document.getElementById(
+    'profilePic'
+).src = data.profilePic;
+
+            document.getElementById(
+                'followersCount'
+            ).innerText = data.followers;
+
+            document.getElementById(
+                'followingCount'
+            ).innerText = data.following;
+
+            document.getElementById(
+                'bio'
+            ).innerText = data.bio;
+
+            document.getElementById(
+                'postsCount'
+            ).innerText = data.posts;
+        }
+
+        async function followUser() {
+
+            const username =
+            localStorage.getItem('username');
+
+            const response =
+            await fetch(`/follow/${username}`, {
+
+                method: 'POST'
+            });
+
+            const message =
+            await response.text();
+
+            alert(message);
+
+            loadProfile();
+        }
+
+        loadProfile();
+
+    </script>
+    
+
+</body>
+
+</html>

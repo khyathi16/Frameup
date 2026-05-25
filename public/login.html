@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>FameUp Login</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="login-body">
+
+    <div class="auth-container">
+
+        <form id="loginForm" class="auth-form">
+
+            <h1>Welcome Back 👋</h1>
+
+            <p class="subtitle">
+                Login to continue to FameUp 🚀
+            </p>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                required
+            >
+
+            <button type="submit">
+                Login
+            </button>
+
+            <p class="switch-text">
+
+                Don't have an account?
+
+                <a href="register.html">
+                    Register
+                </a>
+
+            </p>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        document.getElementById('loginForm')
+
+        .addEventListener('submit', async (e) => {
+
+            e.preventDefault();
+
+            const loginData = {
+
+                email:
+                document.getElementById('email').value,
+
+                password:
+                document.getElementById('password').value
+            };
+
+            const response = await fetch('/login', {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify(loginData)
+            });
+
+            const data = await response.json();
+
+            if(data.success) {
+
+                localStorage.setItem(
+
+                    'username',
+
+                    data.username
+                );
+
+                window.location.href = 'index.html';
+            }
+
+            else {
+
+                alert('Invalid Credentials');
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
