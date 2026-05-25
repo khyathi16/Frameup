@@ -1,0 +1,29 @@
+# FameUp 🚀
+
+FameUp is a full-stack social media web application inspired by Instagram.
+
+## Features ✨
+
+- User Login & Register
+- Create Posts
+- Upload Images
+- Like Posts
+- Comment System
+- User Profiles
+- Followers & Following
+- Profile Photos
+- Responsive UI
+
+## Technologies Used 💻
+
+- HTML
+- CSS
+- JavaScript
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+
+## Developed By 👩‍💻
+
+Khyathi
