@@ -6,9 +6,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 
-mongoose.connect(
-'mongodb+srv://pandu160207_db_user:khyathi16@khyathi.zlgicuc.mongodb.net/FameUp?retryWrites=true&w=majority'
-)
+mongoose.connect(process.env.MONGO_URL)
 
 .then(() => {
 

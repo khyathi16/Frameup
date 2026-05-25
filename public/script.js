@@ -1,9 +1,14 @@
+const API =
+'https://fameup-backend.onrender.com';
+
+
 async function createPost() {
 
     const postInput =
-        document.getElementById('postInput');
+    document.getElementById('postInput');
 
-    const postText = postInput.value;
+    const postText =
+    postInput.value;
 
     if(postText === '') {
 
@@ -11,32 +16,36 @@ async function createPost() {
 
         return;
     }
+
     const imageInput =
     document.getElementById('imageInput');
 
-    await fetch('/create-post', {
+    await fetch(`${API}/create-post`, {
 
         method: 'POST',
 
         headers: {
-            'Content-Type': 'application/json'
+
+            'Content-Type':
+            'application/json'
         },
 
-       body: JSON.stringify({
+        body: JSON.stringify({
 
-    username:
-    localStorage.getItem('username'),
+            username:
+            localStorage.getItem('username'),
 
-    profilePic:
-    localStorage.getItem('profilePic'),
+            profilePic:
+            localStorage.getItem('profilePic'),
 
-    content: postText,
+            content: postText,
 
-    image: imageInput.value
-})
+            image: imageInput.value
+        })
     });
 
     postInput.value = '';
+
     imageInput.value = '';
 
     loadPosts();
@@ -46,13 +55,15 @@ async function createPost() {
 async function loadPosts() {
 
     const response =
-        await fetch('/posts');
+    await fetch(`${API}/posts`);
 
     const posts =
-        await response.json();
+    await response.json();
 
     const postsContainer =
-        document.getElementById('postsContainer');
+    document.getElementById(
+        'postsContainer'
+    );
 
     postsContainer.innerHTML = '';
 
@@ -64,94 +75,98 @@ async function loadPosts() {
 
             <div class="post-header">
 
-                <img src="${post.profilePic}">
+                <img
+                    src="${post.profilePic}"
+                >
 
-                <h3>${post.username}</h3>
+                <h3>
+                    ${post.username}
+                </h3>
 
             </div>
 
             <div class="post-content">
 
-    <img
-        src="${post.image}"
-        class="post-image"
-    >
+                <img
+                    src="${post.image}"
+                    class="post-image"
+                >
 
-    <p>${post.content}</p>
+                <p>
+                    ${post.content}
+                </p>
 
-</div>
+            </div>
 
             <div class="post-actions">
 
-    <i
-        class="fa-heart fa-solid like-btn"
-        onclick="likePost(this, '${post._id}')"
-    ></i>
+                <i
+                    class="fa-heart fa-solid like-btn"
+                    onclick="likePost(this, '${post._id}')"
+                ></i>
 
-    ${post.likes} Likes
+                ${post.likes} Likes
 
-    <i
-        class="fa-regular fa-comment comment-btn"
-        onclick="showCommentBox('${post._id}')"
-    ></i>
+                <i
+                    class="fa-regular fa-comment comment-btn"
+                    onclick="showCommentBox('${post._id}')"
+                ></i>
 
-</div>
+            </div>
 
-<div
-    id="commentBox-${post._id}"
-    class="comment-box"
-    style="display:none;"
->
+            <div
+                id="commentBox-${post._id}"
+                class="comment-box"
+                style="display:none;"
+            >
 
-    <input
-        type="text"
-        id="commentInput-${post._id}"
-        placeholder="Write comment..."
-    >
+                <input
+                    type="text"
+                    id="commentInput-${post._id}"
+                    placeholder="Write comment..."
+                >
 
-    <button onclick="addComment('${post._id}')">
+                <button
+                    onclick="addComment('${post._id}')"
+                >
 
-        Comment
+                    Comment
 
-    </button>
+                </button>
 
-</div>
+            </div>
 
-<div class="comments">
+            <div class="comments">
 
-    ${post.comments.map(comment => `
-        <p>💬 ${comment}</p>
-    `).join('')}
+                ${post.comments.map(comment => `
 
-</div>
+                    <p>
+                        💬 ${comment}
+                    </p>
+
+                `).join('')}
+
+            </div>
 
         </div>
         `;
     });
 }
 
+
 loadPosts();
-async function likePost(id) {
 
-    await fetch(`/like-post/${id}`, {
 
-        method: 'POST'
-    });
-
-    loadPosts();
-}
-function logout() {
-
-    localStorage.removeItem('username');
-
-    window.location.href = 'login.html';
-}
 async function likePost(element, id) {
 
-    await fetch(`/like-post/${id}`, {
+    await fetch(
 
-        method: 'POST'
-    });
+        `${API}/like-post/${id}`,
+
+        {
+            method: 'POST'
+        }
+    );
 
     element.style.color = 'red';
 
@@ -190,22 +205,41 @@ async function addComment(id) {
     const comment =
     input.value;
 
-    await fetch(`/comment/${id}`, {
+    await fetch(
 
-        method: 'POST',
+        `${API}/comment/${id}`,
 
-        headers: {
+        {
 
-            'Content-Type':
-            'application/json'
-        },
+            method: 'POST',
 
-        body: JSON.stringify({
+            headers: {
 
-            comment
-        })
-    });
+                'Content-Type':
+                'application/json'
+            },
+
+            body: JSON.stringify({
+
+                comment
+            })
+        }
+    );
 
     loadPosts();
 }
 
+
+function logout() {
+
+    localStorage.removeItem(
+        'username'
+    );
+
+    localStorage.removeItem(
+        'profilePic'
+    );
+
+    window.location.href =
+    'login.html';
+}
